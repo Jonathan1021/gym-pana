@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /** Configuration */
+
 app.use('/api', UserRoutes)
 app.use('/api/healthcheck', require('express-healthcheck')());
 
