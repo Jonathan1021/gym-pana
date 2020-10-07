@@ -1,44 +1,24 @@
-/*eslint-env node*/
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var bodyParser = require('body-parser')
 
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
-
-// This application uses express as its web server
-// for more info, see: http://expressjs.com
-const express = require('express');
-const bodyParser = require('body-parser')
-
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-const cfenv = require('cfenv');
-
-// create a new express server
-const app = express();
+var app = express();
 
 /* Rutas API */
 const UserRoutes = require('./bin/routes/UserRoute')
 
-/* Configuración de body-parser */
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+/** Configuration */
+app.use('/api', UserRoutes)
 app.use('/api/healthcheck', require('express-healthcheck')());
 
-
-/* Configuración de rutas */
-app.use('/api', UserRoutes)
-
-
-
-// serve the files out of ./public as our main files
-app.use(express.static(__dirname + '/public'));
-
-// get the app environment from Cloud Foundry
-const appEnv = cfenv.getAppEnv();
-
-// start server on the specified port and binding host
-app.listen(appEnv.port, '0.0.0.0', function() {
-  // print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
-});
+module.exports = app;
