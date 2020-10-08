@@ -8,16 +8,15 @@ const UserLogic = require('../logic/UserLogic')
  * @param {*} res
  */
 const saveUser = async (req, res) => {
-  try {
-    
+  let userSaved = {}
+  try {    
     const user = req.body    
-    console.log(user)
-    const userSaved = await UserLogic.saveUser(user)
-    console.log(userSaved)
+    userSaved = await UserLogic.saveUser(user)
   } catch (error) {
+    console.log(error)
     res.status(500).send({err: error.message})
   }
-  return res.status(201).send()
+  return res.status(201).send(userSaved)
 }
 
 module.exports = {

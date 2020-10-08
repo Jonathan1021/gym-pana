@@ -1,14 +1,14 @@
 'use strict'
 
-const Database = require('../db/conection')
+const User = require('../dto/UserDTO')
 
 class UserDao {
   constructor() {
-    this.connection = Database.getConnection()
+    this.user = User()
   }
 
   async save(user) {
-    return await this.connection.insert(user)
+    return (await this.user.create(user)).dataValues
   }
 }
 
