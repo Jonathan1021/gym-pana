@@ -1,8 +1,8 @@
 module.exports = {
-  database: process.env.DB_NAME || 'gym-pana',
-  username: process.env.DB_USER || 'jvega@zeus-db',
-  password: process.env.DB_PASS || '$vC0RL2s!U8?',
-  host: process.env.DB_HOST || 'zeus-db.mysql.database.azure.com',
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  host: process.env.DB_HOST,
   dialect: 'mysql',
   ssl: false,
   pool: {
