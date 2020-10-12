@@ -19,6 +19,19 @@ const saveUser = async (req, res) => {
   return res.status(201).send(userSaved)
 }
 
+const getUser = async (req, res) => {
+  let user = {}
+  try {    
+    const _id = req.params.id
+    user = await UserLogic.getUser(_id)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({err: error.message})
+  }
+  return res.status(200).send(user)
+}
+
 module.exports = {
-  saveUser
+  saveUser,
+  getUser
 }
