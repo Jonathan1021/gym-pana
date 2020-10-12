@@ -20,8 +20,8 @@ class UserDao {
     });
   }
 
-  async getUserAll() {
-    return await this.user.findAll()
+  async getUserAll(where) {
+    return await this.user.findAll({where})
   }
 }
 

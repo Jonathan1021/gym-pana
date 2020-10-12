@@ -19,11 +19,11 @@ const saveUser = async (req, res) => {
   return res.status(201).send(userSaved)
 }
 
-const getUser = async (req, res) => {
+const getUserById = async (req, res) => {
   let user = {}
   try {    
     const _id = req.params.id
-    user = await UserLogic.getUser(_id)
+    user = await UserLogic.getUserById(_id)
   } catch (error) {
     console.log(error)
     res.status(500).send({err: error.message})
@@ -31,7 +31,20 @@ const getUser = async (req, res) => {
   return res.status(200).send(user)
 }
 
+const getUserAll = async (req, res) => {
+  let users = []
+  try {
+    const opts = Object.keys(req.query).length ? req.query : undefined
+    users = await UserLogic.getUserAll(opts)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({err: error.message})
+  }
+  return res.status(200).send(users)
+}
+
 module.exports = {
   saveUser,
-  getUser
+  getUserById,
+  getUserAll
 }

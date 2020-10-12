@@ -10,15 +10,18 @@ const saveUser = async (opts) => {
   return await new UserDomain().save(opts)  
 }
 
-const getUser = async (_id) => {
-  if (_id) {
-    const userFound = await new UserDomain().getUserById(_id)
-    return userFound.length ? userFound[0] : {}
-  }
-  return await new UserDomain().getUserAll()
+const getUserById = async (_id = 0) => {
+  const userFound = await new UserDomain().getUserById(_id)
+  return userFound.length ? userFound[0] : {} 
+}
+
+const getUserAll = async (opts) => {
+  const usersFound = await new UserDomain().getUserAll(opts)
+  return usersFound.length === 1 ? usersFound[0] : usersFound
 }
 
 module.exports = {
   saveUser,
-  getUser
+  getUserById,
+  getUserAll
 }
