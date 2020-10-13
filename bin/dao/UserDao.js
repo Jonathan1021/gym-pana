@@ -14,7 +14,7 @@ class UserDao {
   async getUserById(id) {
     return await this.user.findAll({
       where: {
-        iduser: id
+        identification: id
       },
       limit: 1
     });
